@@ -23,13 +23,14 @@ if defined?(ActiveAdmin)
       end
       column :created_at
       column :updated_at
+      actions
     end
 
     form do |f|
-      inputs "Details" do
-        input :description
-        input :content_key if resource.new_record?
-        input :content, as: :summernote
+      f.inputs "Details" do
+        f.input :description
+        f.input :content_key if resource.new_record?
+        f.input :content
       end
       actions
     end
