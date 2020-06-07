@@ -7,9 +7,9 @@ if defined?(ActiveAdmin)
       resources_configuration[:self][:instance_name] = "content_block"
     end
 
-    permit_params :content, :content_key, :description
+    permit_params :content, :content_key, :description, :multiple, :order
 
-    actions :all, except: [:destroy, :new]
+    actions :all
 
     filter :description
     filter :content_key
@@ -29,7 +29,8 @@ if defined?(ActiveAdmin)
     form do |f|
       f.inputs "Details" do
         f.input :description
-        f.input :content_key if resource.new_record?
+        f.input :multiple
+        f.input :content_key, as: :select, collection: Blocky::ContentBlock.select{|content_block| content_block.multiple == true }.map { |content_block| [content_block.content_key, content_block.content_key] } if resource.new_record?
         f.input :content
       end
       actions
@@ -45,7 +46,6 @@ if defined?(ActiveAdmin)
           raw content_block.content
         end
       end
-      active_admin_comments
     end
   end
 end
