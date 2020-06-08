@@ -12,7 +12,7 @@ module Blocky
     # @see http://github.com/codelation/activeadmin_pro
     if defined?(ActiveAdmin)
       initializer :blocky do
-        ActiveAdmin.application.load_paths.unshift File.join(File.expand_path("../..", __FILE__), "blocky", "admin")
+        ActiveAdmin.application.load_paths.unshift File.join(File.expand_path("../..", __FILE__), "admin")
       end
     end
   end

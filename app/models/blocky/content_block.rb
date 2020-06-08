@@ -3,8 +3,9 @@ module Blocky
   class ContentBlock < ActiveRecord::Base
     # Validations
     validates :content_key, presence: true
-    validates :description, presence: true, unless: :new_record?
-
+    validates :content, presence: true, unless: :new_record?
+    validates_presence_of :order
+    validates_numericality_of :order, only_integer: true, greater_than_or_equal_to: 0
     # Callbacks
     before_save :encode_content
 

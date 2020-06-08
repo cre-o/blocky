@@ -21,12 +21,13 @@ module BlockyHelper
     else
       content_block .multiple = multiple
       content_block.save
+      Blocky::ContentBlock.where(content_key: content_key).where.not(id: content_block.id).delete_all
     end
 
     if try(:current_admin_user)
       if content_block_multiple
         content_arr = ""
-        content_block.each do |block|
+        content_block.order(:order).each do |block|
           edit_text  = "Edit"
           edit_text += '<span style="font-weight: normal; margin-left: 0.5em;">'
           edit_text += block.display_name
@@ -44,7 +45,7 @@ module BlockyHelper
     else
       if content_block_multiple
         content_arr = ""
-        content_block.each do |block|
+        content_block.order(:order).each do |block|
           Rails.cache.fetch(block, skip_digest: true) do
             content_arr += raw(block.content)
           end

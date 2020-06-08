@@ -5,7 +5,8 @@ class CreateBlockyContentBlocks < ActiveRecord::Migration
       t.text   :content
       t.string :description # Optional description for the content block
       t.boolean :multiple, null: false, default: false
-      t.integer :order
+      t.integer :order, default: 0
+      t.boolean :active, default: true
 
       t.timestamps
     end
