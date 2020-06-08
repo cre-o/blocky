@@ -36,7 +36,9 @@ if defined?(ActiveAdmin)
     end
 
     form do |f|
-      f.object.multiple = true
+      if f.object.new_record?
+        f.object.multiple = true
+      end
       f.inputs 'Details' do
         f.input :multiple, as: :hidden
         f.input :content_key, as: :select, collection: Blocky::ContentBlock.select('distinct on (content_key) *').select{ |content_block| content_block.multiple == true }.map { |content_block| [content_block.content_key, content_block.content_key] } if resource.new_record?
