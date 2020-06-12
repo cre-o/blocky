@@ -18,7 +18,17 @@ if defined?(ActiveAdmin)
 
     permit_params :content, :content_key, :description, :multiple, :order
 
-    actions :all
+    actions :all, except: [:new]
+
+    member_action :duplicate_content do
+      new_content_block = resource.dup
+      new_content_block.save
+      redirect_to edit_admin_content_block_path(new_content_block), notice: 'Content Block has been duplicated.'
+    end
+
+    action_item :duplicate_content, only: [:show, :edit], priority: 0 do
+      link_to 'Duplicate This Content Block', duplicate_content_admin_content_block_path(content_block)
+    end
 
     filter :description
     filter :content_key
@@ -83,18 +93,12 @@ if defined?(ActiveAdmin)
         redirect_to admin_content_block(params[:id])
       end
 
-      def new
-        redirect_to new_admin_content_block_path
-      end
-
       def edit
         redirect_to edit_admin_content_block_path(params[:id])
       end
     end
 
-    config.action_items[0] = ActiveAdmin::ActionItem.new only: :index do
-      link_to 'New Content Block', new_admin_content_block_path
-    end
+    actions :all, except: [:new]
 
 
     index do
