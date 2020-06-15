@@ -27,7 +27,9 @@ if defined?(ActiveAdmin)
     end
 
     action_item :duplicate_content, only: [:show, :edit], priority: 0 do
-      link_to 'Duplicate This Content Block', duplicate_content_admin_content_block_path(content_block)
+      if content_block.multiple?
+        link_to 'Duplicate This Content Block', duplicate_content_admin_content_block_path(content_block)
+      end
     end
 
     filter :description
@@ -41,7 +43,14 @@ if defined?(ActiveAdmin)
       end
       column :multiple
       actions defaults: false do |content_block|
-        link_to 'View All', admin_content_keys_path(content_key: content_block.content_key), class: 'member_link'
+        links = []
+        if content_block.multiple?
+          links <<  link_to('View All', admin_content_keys_path(content_key: content_block.content_key), class: 'member_link')
+        else
+          links << link_to('View', admin_content_block_path(content_block), class: 'member_link')
+          links << link_to('Edit', edit_admin_content_block_path(content_block), class: 'member_link')
+        end
+        links.join(' ').html_safe
       end
     end
 
