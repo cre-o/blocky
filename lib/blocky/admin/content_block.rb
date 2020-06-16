@@ -16,7 +16,7 @@ if defined?(ActiveAdmin)
       end
     end
 
-    permit_params :content, :content_key, :description, :multiple, :order
+    permit_params :content, :content_key, :description, :multiple, :order, :active
 
     actions :all, except: [:new]
 
@@ -64,6 +64,7 @@ if defined?(ActiveAdmin)
         f.input :order
         f.input :description
         f.input :content
+        f.input :active
       end
       actions
     end

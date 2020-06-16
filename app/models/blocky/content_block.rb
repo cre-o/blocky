@@ -9,6 +9,7 @@ module Blocky
     # Callbacks
     before_save :encode_content
 
+    scope :active, -> { where(active: true) }
     # Returns the description of the content block if it exists.
     # The content key is used as a fallback if there is no description.
     def display_name
