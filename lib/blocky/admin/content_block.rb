@@ -75,6 +75,7 @@ if defined?(ActiveAdmin)
         row :multiple
         row :order
         row :description
+        row :active
         row :content do |content_block|
           raw content_block.content
         end
@@ -116,6 +117,7 @@ if defined?(ActiveAdmin)
       column :content_key
       column :order
       column :description
+      column :active
       column :created_at
       column :updated_at
       actions defaults: false  do |item|
