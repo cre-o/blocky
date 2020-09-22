@@ -24,25 +24,25 @@ module BlockyHelper
       Blocky::ContentBlock.where(content_key: content_key).where.not(id: content_block.id).delete_all
     end
 
-    if try(:current_admin_user)
-      if content_block_multiple
-        content_arr = ""
-        content_block.active.order(:order).each do |block|
-          edit_text  = "Edit"
-          edit_text += '<span style="font-weight: normal; margin-left: 0.5em;">'
-          edit_text += block.display_name
-          edit_text += "</span>"
-          content_arr += raw("#{link_to(raw(edit_text), edit_admin_content_block_path(block), style: edit_link_style)}#{block.content}")
-        end
-        raw(content_arr)
-      else
-        edit_text  = "Edit"
-        edit_text += '<span style="font-weight: normal; margin-left: 0.5em;">'
-        edit_text += content_block.display_name
-        edit_text += "</span>"
-        raw("#{link_to(raw(edit_text), edit_admin_content_block_path(content_block), style: edit_link_style)}#{content_block.content}") if content_block.active?
-      end
-    else
+    # if try(:current_admin_user)
+    #   if content_block_multiple
+    #     content_arr = ""
+    #     content_block.active.order(:order).each do |block|
+    #       edit_text  = "Edit"
+    #       edit_text += '<span style="font-weight: normal; margin-left: 0.5em;">'
+    #       edit_text += block.display_name
+    #       edit_text += "</span>"
+    #       content_arr += raw("#{link_to(raw(edit_text), edit_admin_content_block_path(block), style: edit_link_style)}#{block.content}")
+    #     end
+    #     raw(content_arr)
+    #   else
+    #     edit_text  = "Edit"
+    #     edit_text += '<span style="font-weight: normal; margin-left: 0.5em;">'
+    #     edit_text += content_block.display_name
+    #     edit_text += "</span>"
+    #     raw("#{link_to(raw(edit_text), edit_admin_content_block_path(content_block), style: edit_link_style)}#{content_block.content}") if content_block.active?
+    #   end
+    # else
       if content_block_multiple
         content_arr = ""
         content_block.active.order(:order).each do |block|
@@ -56,7 +56,7 @@ module BlockyHelper
           raw(content_block.content) if content_block.active?
         end
       end
-    end
+    # end
   end
 
 private
